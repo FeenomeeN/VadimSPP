@@ -4,13 +4,17 @@ import '../App.css';
 import useAuth from '../hooks/useAuth';
 import { increase, decrease } from '../redux/action';
 import Footer from './footer'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import axios from 'axios';
 import Modal from '../components/modal';
+import Music from '../music/music.mp3'
+import MusicPlayerSlider from '../components/player'
 
 export default function TemplateForGenre() {
     const [music, setMusic] = useState()
     const [active, setActive] = useState(false)
+    const [play, setPlay] = useState(false)
+    const audioEl = useRef(null);
 
     useEffect(() => {
         axios.get(`http://192.168.0.101:5000/api/music/getAll`)
@@ -23,7 +27,10 @@ export default function TemplateForGenre() {
         setActive(true)
     }
 
-    console.log(music)
+    // const playing = () => {
+    //     audioEl.current.play()
+    // }
+
     return (<>
         <div className='wrapper'>
             {/* <button onClick={OnAddHandler}> add </button>
@@ -38,13 +45,15 @@ export default function TemplateForGenre() {
             {music?.map((item, index) => {
                 return (
                     <>
-                        <div>{item.name} {item.model} {index}</div>
+                        <div>{item.name}</div>
+                        <MusicPlayerSlider />
                     </>
                 );
             })}
-            <div></div>
+            {/* <button onClick={playing}>play</button>
+            <audio src={Music} ref={audioEl}></audio> */}
         </div>
         <Footer></Footer>
-        <Modal  active = {active} setActive = {setActive} />
+        <Modal active={active} setActive={setActive} />
     </>);
 }

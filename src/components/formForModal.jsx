@@ -77,6 +77,15 @@ const Forms = ({ active }) => {
                   </div>
                 )}
               </Field>
+              <Field name="file_music" validate={required}>
+                {({ input, meta }) => (
+                  <div>
+                    <label>File</label>
+                    <input {...input} type="file" placeholder="File" />
+                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                  </div>
+                )}
+              </Field>
               <div className="buttons">
                 <button type="submit" disabled={submitting}>
                   Submit
